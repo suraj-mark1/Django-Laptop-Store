@@ -35,4 +35,4 @@ A full-featured web application built with **Django** and **MySQL**, designed fo
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/YOUR-USERNAME/Django-Laptop-Store.git
-cd Django-Laptop-Store
+cd laptop
