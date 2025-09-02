@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | TechX</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      background: radial-gradient(circle at top, #050505 20%, #0a0f1b 80%);
+      color: #00ffc6;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .register-container {
+      background: rgba(10, 10, 25, 0.9);
+      border: 2px solid #00ffc6;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 0 30px #00ffc6;
+      width: 400px;
+      animation: fadeIn 1s ease;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffc6;
+      margin-bottom: 30px;
+      font-size: 26px;
+      text-shadow: 0 0 10px #00ffc6;
+    }
+
+    form p {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #c5fefe;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #00ffc6;
+      border-radius: 8px;
+      background-color: #0e1a26;
+      color: #00ffc6;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ffc6;
+    }
+
+    button {
+      background-color: #00ffc6;
+      border: none;
+      padding: 10px 20px;
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    button:hover {
+      background-color: #0ff;
+      box-shadow: 0 0 15px #00ffc6;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Create Your Account</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+</html>

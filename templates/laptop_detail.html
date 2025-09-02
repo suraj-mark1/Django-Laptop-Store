@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ laptop.brand.name }} {{ laptop.model }}</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0f1a, #1c1c2b);
+            color: #c4f0ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #00ffee;
+            text-shadow: 0 0 5px #00ffee, 0 0 10px #00ffee;
+        }
+
+        .laptop-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: rgba(15, 15, 30, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #00ffe0;
+        }
+
+        .laptop-container img {
+            display: block;
+            margin: 1rem auto;
+            border-radius: 12px;
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #0ff;
+            color: #000;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #00ffee;
+            box-shadow: 0 0 15px #0ff;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        li {
+            background: #1a1a2e;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            box-shadow: inset 0 0 5px #0ff;
+        }
+
+        .review {
+            background-color: rgba(25, 25, 40, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            box-shadow: 0 0 10px #00ffee44;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .pagination a {
+            color: #00ffee;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        select {
+            background: #1e1e2e;
+            color: #0ff;
+            padding: 5px 10px;
+            border: 1px solid #0ff;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .username-header {
+            text-align: right;
+            margin-bottom: 1rem;
+            color: #99ffcc;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="username-header">Welcome, {{ request.user.username }}!</div>
+
+    <div class="laptop-container">
+        <h1>{{ laptop.brand.name }} {{ laptop.model }}</h1>
+        <img src="{{ laptop.image.url }}" alt="Laptop Image" width="350">
+
+        <h3>₹{{ laptop.price }}</h3>
+
+        <ul>
+            <li><strong>RAM:</strong> {{ laptop.ram }}</li>
+            <li><strong>Processor:</strong> {{ laptop.processor }}</li>
+            <li><strong>Display:</strong> {{ laptop.display }}</li>
+            <li><strong>screen_hertz :</strong> {{ screen_hertz.display }}</li>
+            <li><strong>Storage:</strong> {{ laptop.storage }}</li>
+            <li><strong>gpu:</strong> {{ laptop.gpu }}</li>
+            <li><strong>ai_chip:</strong> {{ laptop.ai_chip }}</li>
+            <li><strong>os:</strong>{{ laptop.os }}</li>
+        </ul>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'add_to_cart' laptop.id %}" class="btn">Add to Cart</a>
+            <a href="{% url 'buy_now' laptop.id %}" class="btn">Buy Now</a>
+        {% else %}
+            <button class="btn" onclick="showLoginAlert()">Buy Now</button>
+            <p><a href="{% url 'login' %}" class="btn">Login</a> to buy this laptop.</p>
+        {% endif %}
+
+        <form method="get">
+            <label for="sort">Sort Reviews:</label>
+            <select name="sort" onchange="this.form.submit()">
+                <option value="newest" {% if sort_option == 'newest' %}selected{% endif %}>Newest</option>
+                <option value="oldest" {% if sort_option == 'oldest' %}selected{% endif %}>Oldest</option>
+                <option value="highest" {% if sort_option == 'highest' %}selected{% endif %}>Highest Rating</option>
+                <option value="lowest" {% if sort_option == 'lowest' %}selected{% endif %}>Lowest Rating</option>
+            </select>
+        </form>
+
+        <h3>Customer Reviews</h3>
+        {% for review in laptop.review_set.all %}
+            <div class="review">
+                <strong>{{ review.user.username }}</strong> ({{ review.rating }}★)
+                <p>{{ review.comment }}</p>
+                <small>{{ review.created_at }}</small>
+            </div>
+        {% empty %}
+            <p>No reviews yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'submit_review' laptop.id %}" class="btn">Write a Review</a>
+        {% endif %}
+
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort_option }}">Previous</a>
+            {% endif %}
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&sort={{ sort_option }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+    function showLoginAlert() {
+        if (confirm("⚠️ You must be logged in to buy a laptop.\nLogin now?")) {
+            window.location.href = "{% url 'login' %}?next={{ request.path }}";
+        }
+    }
+    </script>
+</body>
+</html>

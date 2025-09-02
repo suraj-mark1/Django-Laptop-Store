@@ -1,0 +1,80 @@
+<h2 class="cyber-title">✅ Payment Successful</h2>
+
+{% if payment %}
+  <div class="cyber-details">
+    <p><strong>💸 Amount Paid:</strong> ₹{{ payment.amount }}</p>
+    <p><strong>💳 Payment Method:</strong> {{ payment.method }}</p>
+    <p><strong>⏰ Payment Time:</strong> {{ payment.paid_at }}</p>
+  </div>
+{% else %}
+  <p class="cyber-msg">🎉 Payment processed successfully.</p>
+{% endif %}
+
+<div class="cyber-link-container">
+  <a href="{% url 'user_profile' %}" class="cyber-button">👤 Go to Your Profile</a>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    background-color: #0d0d0d;
+    color: #00f7ff;
+    font-family: 'Orbitron', sans-serif;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .cyber-title {
+    font-size: 36px;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    margin-bottom: 30px;
+  }
+
+  .cyber-details {
+    background-color: #1a1a1a;
+    border-left: 5px solid #00f7ff;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 0 auto 30px;
+    max-width: 500px;
+    text-align: left;
+    box-shadow: 0 0 15px #00f7ff33;
+  }
+
+  .cyber-details p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #0affbc;
+  }
+
+  .cyber-msg {
+    font-size: 20px;
+    color: #0affbc;
+    margin-bottom: 30px;
+  }
+
+  .cyber-link-container {
+    margin-top: 20px;
+  }
+
+  .cyber-button {
+    background: none;
+    border: 2px solid #00f7ff;
+    color: #00f7ff;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 12px #00f7ff;
+    display: inline-block;
+  }
+
+  .cyber-button:hover {
+    background-color: #00f7ff;
+    color: #000;
+    box-shadow: 0 0 20px #00f7ff;
+  }
+</style>

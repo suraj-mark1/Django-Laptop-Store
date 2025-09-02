@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyberpunk Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+            color: #39ff14;
+            font-family: 'Orbitron', sans-serif;
+            padding: 30px;
+        }
+
+        h2 {
+            color: #00ffff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #212121;
+            border: 1px solid #39ff14;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background-color: #39ff14;
+            color: #000;
+            box-shadow: 0 0 15px #39ff14;
+        }
+
+        .btn-success {
+            background-color: #0f0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-warning {
+            background-color: #ff0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        p {
+            color: #ff00ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border: 2px solid #0ff;
+            border-radius: 12px;
+            box-shadow: 0 0 25px #0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome {{ request.user.username }}</h2>
+
+{% if request.user.is_superuser %}
+    <a href="{% url 'add_laptop' %}" class="btn btn-success">Add Laptop</a>
+    {% for laptop in laptops %}
+    <p>{{ laptop.model }}</p>
+        <a href="{% url 'edit_laptop' laptop.id %}" class="btn btn-warning">Edit Laptop</a>
+    {% endfor %}
+
+    <p>Total Users: {{ users|length }}</p>
+{% endif %}
+
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% if not request.user.is_authenticated %}
+            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+
+        <a href="{% url 'home' %}">Go to Home</a>
+        <a href="{% url 'admin_dashboard' %}">Go to Analysis</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'home.html' %}
+{% block content %}
+<h2>My Support Tickets</h2>
+<ul>
+  {% for ticket in tickets %}
+    <li>
+      <strong>Date:</strong> {{ ticket.created_at }}<br>
+      <strong>Complaint:</strong> {{ ticket.complaint }}<br>
+      <strong>Response:</strong> {{ ticket.response|default:"No response yet." }}<br>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

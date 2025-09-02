@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(ellipse at center, #0f0f0f 0%, #000000 100%);
+      color: #00f0ff;
+      font-family: 'Orbitron', sans-serif;
+      padding: 30px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #00ffe7;
+      text-shadow: 0 0 15px #00ffe7;
+    }
+
+    .cart-container {
+      background-color: rgba(0, 255, 255, 0.05);
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 15px #00f0ff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 900px;
+      margin: auto;
+      margin-top: 30px;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #00ffc3;
+      padding: 10px 0;
+      margin: 10px 0;
+    }
+
+    .total {
+      font-size: 1.5em;
+      text-align: center;
+      margin-top: 20px;
+      color: #ff00ff;
+    }
+
+    .btn-checkout {
+      display: block;
+      width: fit-content;
+      margin: 30px auto;
+      padding: 12px 25px;
+      background: transparent;
+      border: 2px solid #ff00ff;
+      color: #ff00ff;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ff00ff;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-checkout:hover {
+      background-color: #ff00ff;
+      color: #000;
+      box-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+    }
+
+    .delivery {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: rgba(255, 0, 255, 0.05);
+      border: 1px solid #ff00ff;
+      box-shadow: 0 0 12px #ff00ff;
+      border-radius: 10px;
+    }
+
+    .address-text {
+      line-height: 1.6em;
+      text-align: center;
+    }
+
+    a {
+      color: #00ffc3;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #ff00ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="cart-container">
+    <h2>Your Cart</h2>
+    {% for item in items %}
+      <div class="cart-item">
+        <p><strong>{{ item.laptop.brand.name }} {{ item.laptop.model }}</strong><br>
+        ₹{{ item.laptop.price }} x {{ item.quantity }}</p>
+      </div>
+    {% endfor %}
+
+    <p class="total">Total: ₹{{ total }}</p>
+    <a href="{% url 'checkout' %}" class="btn-checkout">🚀 Proceed to Checkout</a>
+
+    <div class="delivery">
+      <h3>Delivery To:</h3>
+      {% if address %}
+        <div class="address-text">
+          <p>{{ address.full_name }}<br>
+             {{ address.address_line }}<br>
+             {{ address.city }} - {{ address.zip_code }}<br>
+             {{ address.state }}, {{ address.country }}<br>
+             📞 {{ address.phone }}</p>
+        </div>
+      {% else %}
+        <p><a href="{% url 'add_or_update_address' %}">➕ Add delivery address</a></p>
+      {% endif %}
+      <a href="{% url 'home' %}">Home</a>
+    </div>
+  </div>
+</body>
+</html>

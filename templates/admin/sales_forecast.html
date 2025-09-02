@@ -1,0 +1,8 @@
+
+  <h2>Sales Forecast</h2>
+  {% if error_message %}
+    <p style="color:red;">{{ error_message }}</p>
+  {% else %}
+    <img src="/{{ image_path }}" alt="Sales Forecast Graph" style="width:100%; max-width:700px;">
+  {% endif %}
+<a href="{% url 'home' %}">Home</a>

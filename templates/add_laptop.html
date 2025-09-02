@@ -1,0 +1,79 @@
+<h2 class="cyber-title">➕ Add Laptop</h2>
+
+<form method="POST" enctype="multipart/form-data" class="cyber-form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="cyber-button">💾 Save</button>
+</form>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    background-color: #0a0a0a;
+    color: #00ffe1;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .cyber-title {
+    text-align: center;
+    font-size: 32px;
+    margin-top: 40px;
+    text-shadow: 0 0 10px #00ffe1;
+  }
+
+  .cyber-form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #101010, #1f1f1f);
+    border: 2px solid #00ffe1;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00ffe1;
+  }
+
+  .cyber-form input,
+  .cyber-form select,
+  .cyber-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 12px 0;
+    border: 1px solid #00ffe1;
+    background-color: #111;
+    color: #00ffe1;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .cyber-form label {
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffe1;
+  }
+
+  .cyber-button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: 2px solid #00ffe1;
+    color: #00ffe1;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00ffe1;
+  }
+
+  .cyber-button:hover {
+    background-color: #00ffe1;
+    color: #000;
+    box-shadow: 0 0 20px #00ffe1;
+  }
+
+  .cyber-form ul.errorlist {
+    color: #ff4b4b;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+</style>

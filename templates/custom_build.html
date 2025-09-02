@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Desktop Build</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      width: 90%;
+      max-width: 1200px;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 30px #00ffcc33;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section,
+    .status-section {
+      flex: 1;
+      background-color: rgba(15, 15, 15, 0.7);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffd533;
+      backdrop-filter: blur(6px);
+    }
+
+    .form-section h2,
+    .status-section h3 {
+      color: #00ffc3;
+      border-bottom: 2px solid #00ffc3;
+      padding-bottom: 10px;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #1c1c1c;
+      color: #00ffcc;
+      border: 1px solid #00ffcc88;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    form button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #00ffc3;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffc3aa;
+      transition: transform 0.3s ease;
+    }
+
+    form button:hover {
+      transform: scale(1.05);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin: 8px 0;
+      padding: 6px;
+      background: #111;
+      border-left: 4px solid #00ffc3;
+      border-radius: 4px;
+    }
+
+    p {
+      margin-top: 10px;
+      background: #111;
+      padding: 10px;
+      border-left: 4px solid #00ffcc;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Left: Build Form -->
+    <div class="form-section">
+      <h2>🛠 Custom Desktop Build Request</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">🚀 Submit Request</button>
+      </form>
+    </div>
+
+    <!-- Right: Previous Status -->
+    {% if latest_build %}
+    <div class="status-section">
+      <h3>📊 Your Latest Build Status</h3>
+      <ul>
+        <li><strong>RAM:</strong> {{ latest_build.ram }}</li>
+        <li><strong>CPU:</strong> {{ latest_build.cpu }}</li>
+        <li><strong>GPU:</strong> {{ latest_build.gpu }}</li>
+        <li><strong>Display:</strong> {{ latest_build.display }}</li>
+        <li><strong>Monitor:</strong> {{ latest_build.monitor }}</li>
+        <li><strong>Keyboard:</strong> {{ latest_build.keyboard }}</li>
+        <li><strong>SSD:</strong> {{ latest_build.ssd }}</li>
+        <li><strong>Storage:</strong> {{ latest_build.storage }}</li>
+      </ul>
+      <p><strong>Status:</strong>
+        {% if latest_build.is_possible == True %}
+          ✅ Can be built
+        {% elif latest_build.is_possible == False %}
+          ❌ Cannot be built
+        {% else %}
+          ⏳ Awaiting admin response
+        {% endif %}
+      </p>
+      {% if latest_build.estimated_price %}
+        <p><strong>Estimated Price:</strong> ₹{{ latest_build.estimated_price }}</p>
+      {% endif %}
+      {% if latest_build.admin_response %}
+        <p><strong>Admin Note:</strong> {{ latest_build.admin_response }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

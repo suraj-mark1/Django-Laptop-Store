@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <style>
+    body {
+      background: radial-gradient(ellipse at top, #0f2027, #203a43, #2c5364);
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+
+    h2, h3, h4 {
+      text-align: center;
+      color: #00fff7;
+      text-shadow: 0 0 10px #00fff7;
+    }
+
+    form, .section {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 15px #00fff7;
+    }
+
+    fieldset {
+      border: 1px solid #00fff7;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    legend {
+      padding: 5px 10px;
+      color: #00fff7;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00fff7;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      background: #1e1e2f;
+      border: 1px solid #00fff7;
+      border-radius: 8px;
+      color: #00fff7;
+    }
+
+    button, .btn {
+      background: #00fff7;
+      border: none;
+      padding: 10px 20px;
+      color: #000;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00fff7;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background: #0ff;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .order-card {
+      border: 1px solid #0ff;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 20px auto;
+      background: rgba(0, 255, 255, 0.05);
+      max-width: 700px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #00fff7;
+      margin: 40px 0;
+    }
+
+    a {
+      color: #00fff7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Your Profile</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Account Info</legend>
+      {{ u_form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Phone</legend>
+      {{ p_form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Delivery Address</legend>
+      {{ a_form.as_p }}
+    </fieldset>
+
+    <button type="submit">💾 Save Changes</button>
+  </form>
+
+  <div class="section">
+    <a href="{% url 'home' %}" class="btn">🏠 Go to Home</a>
+  </div>
+
+  <hr>
+
+  <h3>🧾 Your Orders</h3>
+  {% for payment in payments %}
+    <div class="order-card">
+      <p><strong>Model:</strong> {{ payment.laptop.model }}</p>
+      <p><strong>Amount:</strong> ₹{{ payment.amount }}</p>
+      <p><strong>Status:</strong> {{ payment.get_order_status_display }}</p>
+      <p><strong>Paid On:</strong> {{ payment.paid_at }}</p>
+    </div>
+  {% empty %}
+    <p style="text-align:center;">No orders yet.</p>
+  {% endfor %}
+
+  <hr>
+
+  <h3>🛠️ Your Custom Build Requests</h3>
+  {% if custom_builds %}
+    {% for build in custom_builds %}
+      <div class="order-card">
+        <p><strong>Specifications:</strong> {{ build.specifications }}</p>
+        <p><strong>Status:</strong> {{ build.status }}</p>
+        <p><strong>Admin Message:</strong> {{ build.admin_message }}</p>
+        <p><strong>Price:</strong> ₹{{ build.price }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center;">No custom builds submitted yet.</p>
+  {% endif %}
+
+  <hr>
+
+  <h2>📜 Purchase History</h2>
+  {% if payments %}
+    {% for payment in payments %}
+      <div class="order-card">
+        <h4>Laptop: {{ payment.laptop.model|default:"N/A" }} - ₹{{ payment.amount }}</h4>
+        <p><strong>Payment Status:</strong>
+          {% if payment.is_successful and payment.is_confirmed_by_admin %}
+            ✅ Confirmed by Admin
+          {% elif payment.is_successful %}
+            ✅ Payment Successful (Awaiting Admin Confirmation)
+          {% else %}
+            ❌ Payment Failed or Pending
+          {% endif %}
+        </p>
+        <p><strong>Paid At:</strong> {{ payment.paid_at|date:"F d, Y, P" }}</p>
+        {% if payment.is_successful %}
+          <a href="{% url 'generate_invoice' payment.id %}" class="btn">📄 Download Invoice (PDF)</a>
+        {% else %}
+          <p style="color: red;">Invoice available after payment</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center;">You have no purchase history yet.</p>
+  {% endif %}
+
+      <a href="{% url 'delete_account' %}">Delete My Account</a>
+  <hr>
+  <div class="section" style="text-align:center;">
+    <a href="{% url 'change_password' %}" class="btn btn-warning">🔑 Change Password</a>
+  </div>
+
+</body>
+</html>

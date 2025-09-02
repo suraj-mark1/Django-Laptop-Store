@@ -1,0 +1,11 @@
+{% extends "home.html" %}
+{% block content %}
+<h2>Payment for {{ laptop.model_name }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit">Make Payment</button>
+</form>
+{% endblock %}

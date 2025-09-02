@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compare Laptops</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1f2b 100%);
+      color: #00fff7;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      color: #00fff7;
+      text-shadow: 0 0 10px #00fff7;
+      border-bottom: 2px solid #00fff7;
+      padding-bottom: 10px;
+    }
+
+    .compare-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .compare-controls a {
+      color: #00fff7;
+      text-decoration: none;
+      padding: 10px 18px;
+      background-color: rgba(0, 255, 247, 0.1);
+      border: 1px solid #00fff7;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .compare-controls a:hover {
+      background-color: #00fff7;
+      color: #000;
+      box-shadow: 0 0 15px #00fff7;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid #00fff7;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    th {
+      background-color: #1a2238;
+      color: #00fff7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    tr:hover td {
+      background-color: rgba(0, 255, 255, 0.05);
+    }
+
+    .highlight {
+      background-color: #003f2e !important;
+      font-weight: bold;
+      color: #00ffc3;
+      box-shadow: inset 0 0 10px #00ffc3;
+    }
+
+    a[href*="home"] {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #00fff7;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a[href*="home"]:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00fff7;
+    }
+  </style>
+</head>
+<body>
+  <h2>Compare Laptops</h2>
+
+  <div class="compare-controls">
+    <a href="{% url 'compare_laptops' %}">Clear All</a>
+    <a href="{% url 'home' %}">← Back to Home</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Specification</th>
+        {% for laptop in laptops %}
+          <th>{{ laptop.brand }} {{ laptop.model }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Price</td>
+        {% for laptop in laptops %}
+          <td class="{% if laptop.price == min_price %}highlight{% endif %}">₹{{ laptop.price }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>RAM</td>
+        {% for laptop in laptops %}
+          <td class="{% if laptop.ram == max_ram %}highlight{% endif %}">{{ laptop.ram }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Processor</td>
+        {% for laptop in laptops %}
+          <td>{{ laptop.processor }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Storage</td>
+        {% for laptop in laptops %}
+          <td>{{ laptop.storage }}</td>
+        {% endfor %}
+      </tr>
+      <tr>
+        <td>Display</td>
+        {% for laptop in laptops %}
+          <td>{{ laptop.display }}</td>
+        {% endfor %}
+        
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

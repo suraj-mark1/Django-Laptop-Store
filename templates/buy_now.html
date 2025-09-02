@@ -1,0 +1,145 @@
+<h2 class="cyber-title">💻 Buy Now: {{ laptop.name }}</h2>
+<p class="cyber-price">Price: ₹{{ laptop.price }}</p>
+
+{% if address %}
+  <div class="cyber-address">
+    <h4>📦 Delivery Address:</h4>
+    <p>{{ address.line }}, {{ address.city }}, {{ address.state }} - {{ address.zip_code }}</p>
+    <p>📞 Phone: {{ address.phone }}</p>
+  </div>
+{% else %}
+  <p class="cyber-error">⚠️ No address found. Please update your address in your profile.</p>
+{% endif %}
+
+<form method="POST" class="cyber-form">
+  {% csrf_token %}
+
+  <h4 class="cyber-subtitle">💳 Choose Payment Method:</h4>
+  <label><input type="radio" name="delivery_method" value="Cash" required> Cash</label><br>
+  <label><input type="radio" name="delivery_method" value="Online"> Online</label>
+
+  <div id="online-fields" class="cyber-extra" style="display:none;">
+    <input type="text" name="card_name" placeholder="Card Name">
+    <input type="password" name="card_pin" placeholder="Card PIN">
+  </div>
+
+  <div id="cash-options" class="cyber-extra" style="display:none;">
+    <label><input type="radio" name="cash_option" value="Pay on Delivery"> Pay on Delivery</label><br>
+    <label><input type="radio" name="cash_option" value="Delivery Online"> Delivery Online</label>
+  </div>
+
+  <button type="submit" class="cyber-button">🚀 Proceed to Payment</button>
+</form>
+
+<script>
+document.querySelectorAll('input[name="delivery_method"]').forEach(el => {
+  el.addEventListener('change', function () {
+    const onlineFields = document.getElementById('online-fields');
+    const cashOptions = document.getElementById('cash-options');
+    if (this.value === 'Online') {
+      onlineFields.style.display = 'block';
+      cashOptions.style.display = 'none';
+    } else {
+      onlineFields.style.display = 'none';
+      cashOptions.style.display = 'block';
+    }
+  });
+});
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    background-color: #0d0d0d;
+    color: #00f7ff;
+    font-family: 'Orbitron', sans-serif;
+    padding: 20px;
+  }
+
+  .cyber-title {
+    text-align: center;
+    font-size: 32px;
+    text-shadow: 0 0 10px #00f7ff;
+    margin-bottom: 20px;
+  }
+
+  .cyber-price {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #0affbc;
+  }
+
+  .cyber-address {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border-left: 5px solid #00f7ff;
+    border-radius: 8px;
+    margin-bottom: 25px;
+  }
+
+  .cyber-error {
+    color: #ff4b4b;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .cyber-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #111, #1e1e1e);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00f7ff;
+    border: 2px solid #00f7ff;
+  }
+
+  .cyber-subtitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .cyber-form label {
+    display: block;
+    margin: 10px 0;
+    color: #0affbc;
+  }
+
+  .cyber-form input[type="text"],
+  .cyber-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #0a0a0a;
+    border: 1px solid #00f7ff;
+    color: #00f7ff;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .cyber-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: transparent;
+    color: #00f7ff;
+    border: 2px solid #00f7ff;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px #00f7ff;
+  }
+
+  .cyber-button:hover {
+    background-color: #00f7ff;
+    color: #000;
+    box-shadow: 0 0 20px #00f7ff;
+  }
+
+  .cyber-extra {
+    margin-top: 15px;
+  }
+</style>

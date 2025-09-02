@@ -1,0 +1,523 @@
+<!-- CPU Circuit Entry Animation -->
+<div id="cpu-loader">
+  <div class="node-line top-line"></div>
+  <div class="node-line bottom-line"></div>
+  <div class="node-line left-line"></div>
+  <div class="node-line right-line"></div>
+  
+  <div class="cpu-chip">CPU</div>
+  <p class="boot-msg">Initializing Circuit...</p>
+</div>
+<style>
+    /* CPU Loader Fullscreen */
+#cpu-loader {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #0f0;
+  font-family: monospace;
+}
+
+/* CPU Chip Center */
+.cpu-chip {
+  width: 80px;
+  height: 80px;
+  background-color: #0f0;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #0f0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Node lines */
+.node-line {
+  position: absolute;
+  background-color: #0f0;
+  z-index: 1;
+}
+
+/* Top line */
+.top-line {
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 0;
+  animation: grow-top 1s forwards;
+}
+
+/* Bottom line */
+.bottom-line {
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 0;
+  animation: grow-bottom 1s forwards 1s;
+}
+
+/* Left line */
+.left-line {
+  left: 0;
+  top: 50%;
+  height: 4px;
+  width: 0;
+  animation: grow-left 1s forwards 2s;
+}
+
+/* Right line */
+.right-line {
+  right: 0;
+  top: 50%;
+  height: 4px;
+  width: 0;
+  animation: grow-right 1s forwards 3s;
+}
+
+/* Boot message */
+.boot-msg {
+  margin-top: 150px;
+  font-size: 18px;
+  animation: blink 1s infinite;
+}
+
+/* Animations */
+@keyframes grow-top {
+  to { height: 50%; }
+}
+
+@keyframes grow-bottom {
+  to { height: 50%; }
+}
+
+@keyframes grow-left {
+  to { width: 50%; }
+}
+
+@keyframes grow-right {
+  to { width: 50%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+</style>
+<script>
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      const loader = document.getElementById("cpu-loader");
+      loader.style.transition = "opacity 1s ease";
+      loader.style.opacity = 0;
+      setTimeout(() => loader.style.display = "none", 1000);
+    }, 5000); // 5 seconds total animation
+  });
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laptop Configurator ERP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      font-family: 'Roboto', sans-serif;
+      color: #f0f0f0;
+    }
+
+    header {
+      background-color: #111;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      color: #00ffff;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ffff;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(135deg, #0d0d0d 40%, #111 100%);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 8px #00f0f0;
+    }
+
+    .filters {
+      background: #1a1a1a;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .filters select,
+    .filters input,
+    .filters button {
+      padding: 10px;
+      background: #000;
+      border: 1px solid #00ffff;
+      color: #0ff;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #121212;
+      border: 1px solid #00ffff44;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.05);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #00f0ff44;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .card-body p {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 8px;
+    }
+
+    .price {
+      color: #0f0;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #00ffff;
+      color: #000;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #0ff;
+      box-shadow: 0 0 10px #00ffffaa;
+    }
+
+    aside {
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+      color: #0f0;
+      margin: 30px auto;
+      max-width: 300px;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #111;
+      color: #888;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #0ff;
+    }
+
+    @media screen and (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">💻 ERP Configurator</div>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_profile' %}">My Profile</a>
+      <a href="{% url 'change_password' %}">Change Password</a>
+      <a href="{% url 'return_laptop' %}">Return a Laptop</a>
+      <a href="{% url 'custom_build' %}">Custom Build</a>
+      <a href="{% url 'view_cart' %}">Cart</a>
+      <a href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Welcome to the ERP Laptop & Desktop Configurator</h1>
+</div>
+
+<form method="get" class="filters">
+  <select name="brand">
+    <option value="">All Brands</option>
+    <option value="Dell">Dell</option>
+    <option value="HP">HP</option>
+    <option value="Lenovo">Lenovo</option>
+    <option value="Asus">Asus</option>
+    <option value="Apple">Apple</option>
+  </select>
+
+  <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}">
+  <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}">
+
+  
+  
+  <input type="text" id="search-input" placeholder="Search laptops..." oninput="liveSearch()" autocomplete="off">
+  <div id="suggestions-box" class="suggestions"></div>
+
+  <button type="submit">Apply Filters</button>
+</form>
+
+<aside>
+  <h3>Compare Laptops</h3>
+  <form method="get" action="{% url 'compare_laptops' %}">
+    {% for laptop in laptops %}
+      <label>
+        <input type="checkbox" name="ids" value="{{ laptop.id }}">
+        {{ laptop.brand.name }} {{ laptop.model }}
+      </label><br>
+    {% endfor %}
+    <button type="submit" class="btn" style="margin-top:10px;">Compare</button>
+  </form>
+</aside>
+
+<div class="container">
+  {% for laptop in laptops %}
+    <div class="card">
+      {% if laptop.image %}
+        <img src="{{ laptop.image.url }}" alt="{{ laptop.model }}">
+      {% else %}
+        <img src="https://via.placeholder.com/250x180?text=No+Image" alt="No Image">
+      {% endif %}
+      <div class="card-body">
+        <h3>{{ laptop.brand.name }} {{ laptop.model }}</h3>
+        <p class="price">₹{{ laptop.price }}</p>
+        <p>RAM: {{ laptop.ram }} | Processor: {{ laptop.processor }}<br>
+        Storage: {{ laptop.storage }} | Display: {{ laptop.display }}</p>
+        <a class="btn" href="{% url 'laptop_detail' laptop.id %}">View Details</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+function liveSearch() {
+  const query = document.getElementById("search-input").value;
+  if (query.length > 1) {
+    fetch(`/search-suggestions/?q=${query}`)
+      .then(res => res.json())
+      .then(data => {
+        const box = document.getElementById("suggestions-box");
+        box.innerHTML = '';
+        data.suggestions.forEach(item => {
+          const div = document.createElement('div');
+          div.innerHTML = `<a href="/laptop/${item.id}">${item.name}</a>`;
+          box.appendChild(div);
+        });
+      });
+  } else {
+    document.getElementById("suggestions-box").innerHTML = '';
+  }
+}
+</script>
+
+<style>
+.suggestions {
+  border: 1px solid #ccc;
+  background: #fff;
+  position: absolute;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 300px;
+}
+.suggestions div a {
+  padding: 8px;
+  display: block;
+  color: #000;
+  text-decoration: none;
+}
+.suggestions div a:hover {
+  background-color: #f0f0f0;
+}
+</style>
+<!-- Floating Chatbot Button -->
+<div id="chatbot-btn" 
+     style="position:fixed; bottom:20px; right:20px; background:#00f0ff; color:#000;
+            border-radius:50%; width:60px; height:60px; display:flex; align-items:center;
+            justify-content:center; cursor:pointer; font-size:28px; 
+            box-shadow:0 0 15px #00f0ff; transition:0.3s;">
+💬
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-box" 
+     style="display:none; position:fixed; bottom:90px; right:20px; width:320px; height:450px;
+            background:#0d0d0d; border:2px solid #00f0ff; border-radius:15px; overflow:hidden;
+            box-shadow:0 0 25px #00f0ff;">
+    
+    <!-- Header -->
+    <div style="background:#0d0d0d; color:#00f0ff; padding:12px; font-weight:bold;
+                text-align:center; font-family:'Orbitron', sans-serif;
+                text-shadow:0 0 8px #00f0ff; letter-spacing:1px;">
+        🤖 Laptop Assistant
+    </div>
+    
+    <!-- Messages -->
+    <div id="chatbot-messages" 
+         style="padding:12px; height:330px; overflow-y:auto; font-size:14px; 
+                color:#eee; font-family:'Segoe UI', sans-serif;">
+    </div>
+    
+    <!-- Input -->
+    <div style="display:flex; border-top:1px solid #00f0ff;">
+        <input id="chatbot-input" type="text" placeholder="Type your query..." 
+               style="flex:1; padding:10px; border:none; outline:none; 
+                      background:#1a1a1a; color:#00f0ff; font-size:14px;">
+        <button id="chatbot-send" 
+                style="padding:10px 15px; background:#00f0ff; color:#000; border:none;
+                       font-weight:bold; cursor:pointer;">
+            Send
+        </button>
+    </div>
+</div>
+
+<script>
+document.getElementById("chatbot-btn").onclick = function() {
+    let box = document.getElementById("chatbot-box");
+    box.style.display = (box.style.display === "none") ? "block" : "none";
+};
+
+document.getElementById("chatbot-send").onclick = sendMessage;
+document.getElementById("chatbot-input").addEventListener("keypress", function(e){
+    if(e.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
+    let input = document.getElementById("chatbot-input");
+    let message = input.value.trim();
+    if (message) {
+        addMessage("You", message, "#00f0ff");
+        fetch(`/chatbot/get-response/?q=${encodeURIComponent(message)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.laptops) {
+                addMessage("Bot", data.reply, "#0ff");
+                data.laptops.forEach(l => {
+                    addMessage("Bot", `${l.name} - ₹${l.price} <a href="${l.url}" target="_blank" style="color:#00f0ff;">[View]</a>`, "#0ff");
+                });
+            } else {
+                addMessage("Bot", data.reply, "#0ff");
+            }
+        });
+        input.value = "";
+    }
+}
+
+function addMessage(sender, text, color) {
+    let box = document.getElementById("chatbot-messages");
+    let msg = document.createElement("div");
+    msg.innerHTML = `<b style="color:${color}">${sender}:</b> <span style="color:#ccc;">${text}</span>`;
+    msg.style.margin = "6px 0";
+    msg.style.padding = "6px";
+    msg.style.borderRadius = "8px";
+    msg.style.background = sender === "You" ? "#111" : "#1a1a1a";
+    msg.style.boxShadow = "0 0 8px rgba(0,240,255,0.3)";
+    box.appendChild(msg);
+    box.scrollTop = box.scrollHeight;
+}
+</script>
+
+
+<footer>
+  <p>Contact us: +91 0022 3344 55 | MG Road 1</p>
+  <p>&copy; 2025 ERP Configurator</p>
+  {% if user.is_authenticated %}
+    <a href="{% url 'customer_support' %}">Customer Support</a>
+  {% else %}
+    <a href="{% url 'login' %}?next={% url 'customer_support' %}">Customer Support</a>
+  {% endif %}
+</footer>
+
+</body>
+</html>

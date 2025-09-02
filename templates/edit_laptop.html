@@ -1,0 +1,112 @@
+<h2 class="cyber-title">🛠️ Edit Laptop - {{ laptop.model }}</h2>
+
+<form method="post" enctype="multipart/form-data" class="cyber-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if form.errors %}
+        <ul class="cyber-errors">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <button type="submit" class="cyber-button">💾 Save Changes</button>
+</form>
+
+<div class="cyber-link">
+    <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    background-color: #0a0a0a;
+    color: #00ffe1;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .cyber-title {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 30px;
+    text-shadow: 0 0 10px #00ffe1;
+  }
+
+  .cyber-form {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #101010, #1f1f1f);
+    border: 2px solid #00ffe1;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #00ffe1;
+  }
+
+  .cyber-form input,
+  .cyber-form select,
+  .cyber-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 12px 0;
+    border: 1px solid #00ffe1;
+    background-color: #111;
+    color: #00ffe1;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .cyber-form label {
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffe1;
+  }
+
+  .cyber-button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: 2px solid #00ffe1;
+    color: #00ffe1;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 0 10px #00ffe1;
+  }
+
+  .cyber-button:hover {
+    background-color: #00ffe1;
+    color: #000;
+    box-shadow: 0 0 25px #00ffe1;
+  }
+
+  .cyber-errors {
+    list-style-type: none;
+    padding: 10px;
+    margin: 15px 0;
+    border-left: 3px solid #ff4b4b;
+    color: #ff4b4b;
+  }
+
+  .cyber-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .cyber-link a {
+    color: #00ffe1;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ffe1;
+  }
+
+  .cyber-link a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #00ffe1;
+  }
+</style>

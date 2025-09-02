@@ -1,0 +1,10 @@
+<h2>Delete Account</h2>
+<p>⚠️ Are you sure you want to delete your account? This action cannot be undone.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background:red; color:white; padding:10px; border:none; cursor:pointer;">
+        Yes, Delete My Account
+    </button>
+    <a href="{% url 'user_profile' %}" style="margin-left:10px;">Cancel</a>
+</form>

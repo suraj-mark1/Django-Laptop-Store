@@ -1,0 +1,14 @@
+<h2>{{ category_name }}</h2>
+
+{% if laptops %}
+    {% for laptop in laptops %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+            <h4>{{ laptop.name }}</h4>
+            <p>RAM: {{ laptop.ram }} GB</p>
+            <p>Price: ₹{{ laptop.price }}</p>
+            <a href="{% url 'buy_now' laptop.id %}">Buy Now</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No laptops found in this category.</p>
+{% endif %}

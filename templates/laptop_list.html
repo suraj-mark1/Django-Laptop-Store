@@ -1,0 +1,19 @@
+<h2>Available Laptops</h2>
+
+<form method="get">
+    <label for="ram">Filter by RAM:</label>
+    <select name="ram" id="ram" onchange="this.form.submit()">
+        <option value="">--All--</option>
+        <option value="8">8GB</option>
+        <option value="16">16GB</option>
+        <option value="32">32GB</option>
+    </select>
+</form>
+
+<ul>
+{% for laptop in laptops %}
+    <li>{{ laptop.name }} - {{ laptop.ram }} - ₹{{ laptop.price }}</li>
+{% empty %}
+    <li>No laptops found</li>
+{% endfor %}
+</ul>
